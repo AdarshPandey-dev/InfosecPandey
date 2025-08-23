@@ -1,0 +1,17 @@
+======================================
+Part 4: DNS Logs
+======================================
+--------------------------------------------------------------------------
+Scenario 8: DNS Tunneling and Malicious Domains
+--------------------------------------------------------------------------
+21-Aug-2024 22:30:15.123 client 10.0.1.50#54321: query: 4d5a90000300000004000000.malicious-c2.example.com IN TXT + (10.0.1.1)
+21-Aug-2024 22:30:15.234 client 10.0.1.50#54322: query: 7468697320697320612074657374.malicious-c2.example.com IN TXT + (10.0.1.1)  
+21-Aug-2024 22:30:15.345 client 10.0.1.50#54323: query: 6d657373616765.malicious-c2.example.com IN TXT + (10.0.1.1)
+21-Aug-2024 22:30:16.456 client 10.0.1.75#49876: query: suspicious-domain.tk IN A + (10.0.1.1)
+21-Aug-2024 22:30:16.567 client 10.0.1.75#49877: query: malware-download.cf IN A + (10.0.1.1)
+21-Aug-2024 22:30:16.678 client 10.0.1.75#49878: query: phishing-site.ga IN A + (10.0.1.1)
+21-Aug-2024 22:30:16.789 client 10.0.1.75#49879: query: c2-server.ml IN A + (10.0.1.1)
+21-Aug-2024 22:30:17.123 client 10.0.1.100#55555: query: dga-domain-12ab34cd56ef.com IN A + (10.0.1.1)
+21-Aug-2024 22:30:17.234 client 10.0.1.100#55556: query: dga-domain-78gh90ij12kl.com IN A + (10.0.1.1)
+21-Aug-2024 22:30:17.345 client 10.0.1.100#55557: query: dga-domain-34mn56op78qr.com IN A + (10.0.1.1)
+--------------------------------------------------------------------------
