@@ -1,0 +1,18 @@
+======================================
+Part 5: Firewall Logs
+======================================
+--------------------------------------------------------------------------
+Scenario 9: Port Scanning and Network Reconnaissance
+--------------------------------------------------------------------------
+Aug 21 23:45:12 firewall01 kernel: [BLOCK] IN=eth0 OUT= SRC=203.0.113.200 DST=10.0.1.10 LEN=44 TOS=0x00 PREC=0x00 TTL=64 ID=12345 PROTO=TCP SPT=54321 DPT=22 WINDOW=1024 SYN
+Aug 21 23:45:12 firewall01 kernel: [BLOCK] IN=eth0 OUT= SRC=203.0.113.200 DST=10.0.1.10 LEN=44 TOS=0x00 PREC=0x00 TTL=64 ID=12346 PROTO=TCP SPT=54322 DPT=23 WINDOW=1024 SYN  
+Aug 21 23:45:12 firewall01 kernel: [BLOCK] IN=eth0 OUT= SRC=203.0.113.200 DST=10.0.1.10 LEN=44 TOS=0x00 PREC=0x00 TTL=64 ID=12347 PROTO=TCP SPT=54323 DPT=80 WINDOW=1024 SYN
+Aug 21 23:45:12 firewall01 kernel: [BLOCK] IN=eth0 OUT= SRC=203.0.113.200 DST=10.0.1.10 LEN=44 TOS=0x00 PREC=0x00 TTL=64 ID=12348 PROTO=TCP SPT=54324 DPT=443 WINDOW=1024 SYN
+Aug 21 23:45:13 firewall01 kernel: [BLOCK] IN=eth0 OUT= SRC=203.0.113.200 DST=10.0.1.10 LEN=44 TOS=0x00 PREC=0x00 TTL=64 ID=12349 PROTO=TCP SPT=54325 DPT=3389 WINDOW=1024 SYN
+Aug 21 23:45:13 firewall01 kernel: [BLOCK] IN=eth0 OUT= SRC=203.0.113.200 DST=10.0.1.11 LEN=44 TOS=0x00 PREC=0x00 TTL=64 ID=12350 PROTO=TCP SPT=54326 DPT=22 WINDOW=1024 SYN
+Aug 21 23:45:13 firewall01 kernel: [BLOCK] IN=eth0 OUT= SRC=203.0.113.200 DST=10.0.1.12 LEN=44 TOS=0x00 PREC=0x00 TTL=64 ID=12351 PROTO=TCP SPT=54327 DPT=22 WINDOW=1024 SYN
+Aug 21 23:45:13 firewall01 kernel: [BLOCK] IN=eth0 OUT= SRC=203.0.113.200 DST=10.0.1.13 LEN=44 TOS=0x00 PREC=0x00 TTL=64 ID=12352 PROTO=TCP SPT=54328 DPT=22 WINDOW=1024 SYN
+Aug 21 23:45:14 firewall01 kernel: [ALLOW] IN=eth0 OUT= SRC=203.0.113.200 DST=10.0.1.15 LEN=52 TOS=0x00 PREC=0x00 TTL=64 ID=12353 PROTO=TCP SPT=54329 DPT=80 WINDOW=1024 SYN ACK
+--------------------------------------------------------------------------
+Write the findings in the comment box..what happened here?
+
