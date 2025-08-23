@@ -1,0 +1,19 @@
+======================================
+Part 6: Email Security Logs
+======================================
+--------------------------------------------------------------------------
+Scenario 10: Phishing Email Campaign // This is mail server logs
+--------------------------------------------------------------------------
+Aug 21 09:15:33 mailserver01 postfix/smtpd[12345]: connect from suspicious-sender.example.com[198.51.100.75]
+Aug 21 09:15:34 mailserver01 postfix/smtpd[12345]: NOQUEUE: reject: RCPT from suspicious-sender.example.com[198.51.100.75]: 450 4.1.8 <noreply@secure-bank-update.com>: Sender address rejected: Domain not found; from=<noreply@secure-bank-update.com> to=<user1@company.com> proto=ESMTP helo=<mail.secure-bank-update.com>
+Aug 21 09:15:35 mailserver01 postfix/smtpd[12345]: disconnect from suspicious-sender.example.com[198.51.100.75] ehlo=1 mail=1 rcpt=0/1 quit=1 commands=3/4
+Aug 21 09:16:45 mailserver01 postfix/smtpd[12346]: connect from compromised-server.net[203.0.113.88]
+Aug 21 09:16:46 mailserver01 postfix/smtpd[12346]: warning: hostname compromised-server.net does not resolve to address 203.0.113.88
+Aug 21 09:16:47 mailserver01 postfix/smtpd[12346]: 4A5B612345: client=compromised-server.net[203.0.113.88]
+Aug 21 09:16:48 mailserver01 postfix/cleanup[12347]: 4A5B612345: message-id=<urgent-action-required@microsoft-security.com>
+Aug 21 09:16:49 mailserver01 postfix/qmgr[12348]: 4A5B612345: from=<security@microsoft-security.com>, size=4567, nrcpt=1 (queue active)
+Aug 21 09:16:50 mailserver01 postfix/smtp[12349]: 4A5B612345: to=<victim@company.com>, relay=internal-mail.company.com[10.0.2.5]:25, delay=2.1, delays=1.8/0.1/0.1/0.1, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 8B9C712346)
+Aug 21 09:16:50 mailserver01 postfix/qmgr[12348]: 4A5B612345: removed
+--------------------------------------------------------------------------
+
+Write the findings in the comment box..what happened here?
