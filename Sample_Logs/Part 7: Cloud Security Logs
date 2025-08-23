@@ -1,0 +1,34 @@
+======================================
+Part 7: Cloud Security Logs
+======================================
+--------------------------------------------------------------------------
+Scenario 11: AWS Cloud Log (High Event Volume Example): Event: Unauthorized API Call
+--------------------------------------------------------------------------
+{
+  "eventVersion": "1.05",
+  "userIdentity": {"type": "IAMUser", "userName": "maliciousUser"},
+  "eventTime": "2025-08-01T14:22:12Z",
+  "eventSource": "ec2.amazonaws.com",
+  "eventName": "TerminateInstances",
+  "awsRegion": "us-west-2",
+  "sourceIPAddress": "203.0.113.52",
+  "userAgent": "aws-cli/2.1.29",
+  "errorCode": "UnauthorizedOperation",
+  "requestParameters": {"instanceId": "i-1234567890abcdef0"},
+  "responseElements": null
+}
+--------------------------------------------------------------------------
+Scenario 12: Cloud Provider API Misuse (Azure Example)
+--------------------------------------------------------------------------
+{
+  "time": "2025-08-21T18:15:00.321Z",
+  "operationName": "Microsoft.Compute/virtualMachines/write",
+  "category": "Administrative",
+  "level": "Error",
+  "statusCode": "Unauthorized",
+  "callerIpAddress": "62.210.44.123",
+  "identity": "john-hacker@example.com",
+  "resourceId": "/subscriptions/xxx/resourceGroups/Production/providers/Microsoft.Compute/virtualMachines/vm01"
+}
+--------------------------------------------------------------------------
+
