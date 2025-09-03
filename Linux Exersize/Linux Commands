@@ -1,0 +1,410 @@
+===============================================================
+Part 1: Introduction to Linux for Cybersecurity
+===============================================================
+📂 Key directories:
+/home    → Your home sweet home. User files live here.
+/etc     → Where configs live. Change something here and boom — instant chaos.
+/var/log → Logs. The CCTV footage of your system.
+/bin & /usr/bin → System programs and commands.
+----------------------------------------------------------------
+Hands-on Demo:
+pwd              # Where am I?
+ls -l /          # Show me the root directory
+cd /home         # Jump into home
+ls -a            # Show hidden files
+man ls           # Read the manual for ls (yes, RTFM)
+----------------------------------------------------------------
+Terminal vs GUI
+Quick Demos:
+whoami         # Who’s logged in?
+uname -a       # Show system info
+history        # See what commands you ran
+clear          # Clean your messy terminal
+----------------------------------------------------------------
+First Basic Commands:
+ls                # List files
+ls -lh            # List with details in human-readable size
+cd /              # Jump to root
+pwd               # Print current directory
+mkdir demo        # Make a folder
+touch demo/file1  # Make a file
+cat demo/file1    # Read the file
+echo "Hacker mode ON" > demo/file1   # Write into file
+rmdir demo        # Delete folder (only if empty)
+===============================================================
+Part 2: Linux Terminal Basics for Cybersecurity:
+===============================================================
+1. File and Directory Management
+Hands-on Commands:
+pwd                 # Show current directory (Where am I?)
+ls -l               # List files with details
+ls -a               # Show hidden files (those shady dotfiles)
+cd /home            # Change to home directory
+mkdir projects      # Create a directory
+touch notes.txt     # Create an empty file
+echo "Hello Linux" > notes.txt   # Write text into a file
+cat notes.txt       # Read the file
+rm notes.txt        # Delete the file
+rmdir projects      # Remove empty directory
+----------------------------------------------------------------
+2: Permissions and Ownership]
+Hands-on Commands:
+ls -l                     # Show permissions
+chmod 755 script.sh       # Give owner full, others read/execute
+chmod u+x script.sh       # Add execute for the user
+chown hacker:team file.txt # Change file ownership
+----------------------------------------------------------------
+3: Pipes and Redirection]
+Hands-on Commands:
+ls -l | less               # Scroll through results page by page
+echo "Hello World" > file.txt   # Write to a file (overwrites)
+echo "Another Line" >> file.txt # Append text
+cat file.txt                # Show file content
+ls -lh > files_list.txt     # Save output of ls to a file
+----------------------------------------------------------------
+4: Searching & Text Processing]
+Hands-on Commands:
+grep "error" /var/log/syslog     # Search for errors in logs
+find / -name "passwords.txt"     # Find files by name
+locate *.conf                    # Quickly find config files
+wc -l file.txt                   # Count lines in a file
+sort file.txt                    # Sort file content
+cat file.txt | grep "Linux"      # Find keyword in file
+cat file.txt | grep "Linux" | wc -l   # Count keyword occurrences
+----------------------------------------------------------------
+5: Combining Commands / One-Liners]
+Examples:
+ps aux | grep ssh        # Find SSH processes
+df -h | sort -k5 -r      # Sort disk usage by size
+du -sh * | sort -h       # Show folder sizes, sorted
+history | grep ls        # See how many times you spammed 'ls'
+===============================================================
+Part 3: Networking in Linux for Cybersecurity
+===============================================================
+1: Checking Network Configuration]
+Hands-on Commands:
+ifconfig                 # Old-school way, still around
+ip a                     # Modern way (preferred)
+ip route show            # Show routing table
+ping -c 4 google.com     # Test connectivity (4 packets only)
+----------------------------------------------------------------
+2: Tracing & DNS Tools]
+Hands-on Commands:
+traceroute google.com       # Follow the path packets take
+nslookup example.com        # Resolve domain → IP
+dig example.com             # Detailed DNS lookup
+----------------------------------------------------------------
+3: Monitoring Network Connections]
+Hands-on Commands:
+netstat -tuln         # Old-school listening ports
+ss -tuln              # New-school way (use this instead)
+ss -ant               # Show active TCP connections
+tcpdump -i eth0       # Capture packets on interface eth0
+
+Filtered Examples:
+tcpdump -i eth0 port 80      # Only HTTP traffic
+tcpdump -i eth0 host 192.168.1.50   # Capture only this host
+----------------------------------------------------------------
+4: Remote Access with SSH & SCP]
+Hands-on Commands:
+ssh user@192.168.1.10                # Log into remote machine
+scp file.txt user@192.168.1.10:/home/user/   # Copy file to remote
+----------------------------------------------------------------
+5: Practical Cybersecurity Use Cases
+One-liner Demos:
+tcpdump -i eth0 port 80          # Sniff HTTP traffic
+ss -tulnp | grep ssh             # Check if SSH service is alive
+ping -c 5 8.8.8.8                # Test Google DNS
+===============================================================
+Part 4: User & Process Management in Linux for Cybersecurity
+===============================================================
+1: Users, Groups, and Privileges]
+Hands-on Commands:
+whoami                # Current logged-in user
+id                    # Show UID, GID, and groups
+cat /etc/passwd       # List system users
+cat /etc/group        # List groups
+----------------------------------------------------------------
+2: Creating & Managing Users]
+Hands-on Commands:
+sudo useradd testuser            # Add new user
+sudo passwd testuser             # Set password
+sudo usermod -aG sudo testuser   # Add user to sudo group
+sudo deluser testuser            # Delete user
+----------------------------------------------------------------
+3: Monitoring User Activity]
+Hands-on Commands:
+who                # Who’s logged in now
+w                  # Active users + their processes
+last               # Login history
+lastlog            # Last login info for all users
+----------------------------------------------------------------
+4: Process Monitoring & Management]
+Hands-on Commands:
+ps aux             # List all processes
+top                # Real-time monitoring
+htop               # Fancy top (colorful, easier to read)
+kill -9 <PID>      # Terminate a suspicious process
+----------------------------------------------------------------
+5: Scheduling Tasks (Cron Jobs)]
+Hands-on Commands:
+crontab -e          # Edit cron jobs
+crontab -l          # List cron jobs
+----------------------------------------------------------------
+Example Job: Run a scan daily at midnight
+0 0 * * * /usr/bin/python3 /home/user/scan.py
+===============================================================
+Part 5: Linux for Security Auditing
+===============================================================
+1: Exploring Log Files
+Hands-on Commands:
+cd /var/log
+ls
+less auth.log          # Authentication logs
+less syslog            # General system logs
+tail -f auth.log       # Watch logins live
+----------------------------------------------------------------
+2: File Integrity & Rootkit Checks
+
+Hands-on Commands:
+sudo chkrootkit              # Scan for known rootkits
+sudo rkhunter --check        # Rootkit & malware checks
+----------------------------------------------------------------
+3: Linux Audit Framework
+Hands-on Commands:
+sudo auditctl -l                           # List audit rules
+sudo auditctl -w /etc/passwd -p wa -k passwd_changes
+ausearch -k passwd_changes                 # Search audit logs
+----------------------------------------------------------------
+4: Firewall Basics with UFW
+Hands-on Commands:
+sudo ufw enable
+sudo ufw status
+sudo ufw allow 22/tcp    # Allow SSH
+sudo ufw deny 23/tcp     # Block Telnet
+----------------------------------------------------------------
+5: System Hardening Essentials
+Hands-on Commands:
+sudo systemctl disable telnet
+sudo apt update && sudo apt upgrade -y
+
+===============================================================
+Part 6: Bash Scripting for Cybersecurity
+===============================================================
+2: Writing Your First Script
+
+Hands-on Demo:
+nano hello.sh
+#!/bin/bash
+echo "Hello, Cybersecurity World!"
+
+chmod +x hello.sh
+./hello.sh
+----------------------------------------------------------------
+3: Variables and Arguments
+
+Hands-on Demo:
+#!/bin/bash
+name=$1
+echo "Scanning host: $name"
+nmap -sV $name
+
+"Here, $1 is the first argument passed to the script. For example:"
+
+./scan.sh 192.168.1.10
+
+"This runs an Nmap service scan against the host. Simple, but powerful."
+----------------------------------------------------------------
+4: Loops for Automation
+Hands-on Demo:
+#!/bin/bash
+for ip in 192.168.1.{1..5}
+do
+  echo "Pinging $ip"
+  ping -c 1 $ip | grep "bytes from"
+done
+
+"This loop pings a whole subnet range and reports which hosts are alive. Perfect for quick network discovery."
+----------------------------------------------------------------
+5: Conditional Logic (if statements)
+Hands-on Demo:
+#!/bin/bash
+if grep "Failed password" /var/log/auth.log > /dev/null
+then
+  echo "⚠️ Warning: Failed login attempts detected!"
+fi
+
+"This script checks authentication logs. If failed logins are found, it triggers a warning — a simple intrusion detection script."
+----------------------------------------------------------------
+6: Combining Tools in Scripts
+
+Hands-on Demo:
+#!/bin/bash
+logfile="/var/log/auth.log"
+grep "Failed password" $logfile | awk '{print $11}' | sort | uniq -c | sort -nr | head
+===============================================================
+Part 7: Linux Tools for Cybersecurity
+===============================================================
+1: Nmap – Network Scanning
+Demo Commands:
+nmap 192.168.1.1               # Simple host scan
+nmap -sV 192.168.1.10          # Service and version detection
+nmap -A 192.168.1.10           # Aggressive scan with OS detection
+----------------------------------------------------------------
+2: Netcat – The Hacker’s Swiss Army Knife
+"Netcat, or nc, can scan ports, transfer files, and even create reverse shells."
+
+Demo Commands:
+nc -zv 192.168.1.10 22-80     # Scan ports 22 to 80
+nc -lvp 4444                  # Start a listener on port 4444
+nc 192.168.1.10 4444          # Connect to listener
+----------------------------------------------------------------
+3: Wireshark & Tcpdump – Traffic Analysis
+
+Demo Commands:
+sudo tcpdump -i eth0 port 80           # Capture HTTP traffic
+sudo tcpdump -i eth0 -w capture.pcap   # Save packets for Wireshark
+----------------------------------------------------------------
+4: Hydra – Password Attacks
+Demo Command:
+hydra -l admin -P rockyou.txt ssh://192.168.1.10
+----------------------------------------------------------------
+5: John the Ripper – Password Cracking
+"John the Ripper is used to crack password hashes."
+
+Demo Commands:
+john --wordlist=/usr/share/wordlists/rockyou.txt hashfile
+john --show hashfile
+----------------------------------------------------------------
+6: Nikto – Web Vulnerability Scanner
+"Nikto scans web servers for vulnerabilities like outdated software, misconfigurations, and dangerous files."
+
+Demo Command:
+nikto -h http://192.168.1.10
+----------------------------------------------------------------
+7: Putting It Together – A Mini Pen Test Workflow
+
+Workflow Demo:
+nmap -sV 192.168.1.10 -oN scan.txt   # Recon & scan target
+nikto -h http://192.168.1.10         # Web vulnerability scan
+hydra -l admin -P rockyou.txt ssh://192.168.1.10   # Password attack
+
+===============================================================
+Part 8: Capturing & Analyzing Traffic
+===============================================================
+2: Capturing Traffic with tcpdump
+
+Demo Commands:
+sudo tcpdump -i eth0              # Capture traffic on interface eth0
+sudo tcpdump -i eth0 -c 10        # Capture only 10 packets
+sudo tcpdump -i eth0 -w capture.pcap   # Save packets to a file
+----------------------------------------------------------------
+3: Filtering Traffic
+
+Demo Commands:
+sudo tcpdump -i eth0 port 80             # Capture only HTTP traffic
+sudo tcpdump -i eth0 host 192.168.1.10   # Capture only traffic from one host
+sudo tcpdump -i eth0 tcp                 # Capture only TCP packets
+sudo tcpdump -i eth0 udp                 # Capture only UDP packets
+----------------------------------------------------------------
+4: Analyzing Packets in Wireshark
+
+Demo Steps:
+Open capture.pcap in Wireshark.
+
+Apply filters:
+http → view only web traffic
+ip.addr == 192.168.1.10 → filter by host
+tcp.flags.syn == 1 → detect connection attempts
+
+"Wireshark gives you a graphical view of traffic, which makes spotting anomalies much easier."
+----------------------------------------------------------------
+5: Detecting Suspicious Activity
+
+Demo Examples:
+Simulate a brute force attempt → multiple failed logins.
+Simulate a port scan → many SYN packets.
+"Here’s how you might detect suspicious activity:"
+Many SYN packets from one host → possible port scan.
+Repeated failed login attempts → brute force attack.
+Cleartext credentials in HTTP → weak security exposure.
+
+===============================================================
+Part 9: Maintaining Security & Ethics
+===============================================================
+2: Maintaining a Secure Linux Environment
+
+Best Practices (with demos):
+sudo apt update && sudo apt upgrade -y    # Keep system updated
+sudo ufw enable                           # Enable firewall
+sudo systemctl disable telnet             # Disable unused services
+
+Other Practices:
+Use strong passwords or SSH keys.
+Regularly review /var/log/auth.log.
+Use VM snapshots for safe experimentation.
+===============================================================
+Part 10: Capstone Lab: Defend & Investigate a Linux System
+===============================================================
+[Scenario Setup]: "Imagine you’re a junior cybersecurity analyst. Your Linux server has been acting strangely — high CPU usage, suspicious logins, and possible network scans. Your job: investigate and secure the system."
+
+Lab Requirements:
+Any Linux VM (Ubuntu/Debian recommended).
+Tools: nmap, tcpdump, ufw, grep, awk, john, hydra, wireshark.
+----------------------------------------------------------------
+🔹 [Step 1: Check Users and Logins]
+
+Demo Commands:
+who                  # See who is logged in
+last                 # Check login history
+sudo grep "Failed password" /var/log/auth.log | tail -10
+
+Goal: Spot failed SSH login attempts or suspicious users.
+----------------------------------------------------------------
+🔹 [Step 2: Investigate Running Processes]
+
+Demo Commands:
+ps aux --sort=-%cpu | head   # Top CPU processes
+netstat -tulnp               # Active network connections
+
+Goal: Identify suspicious processes (e.g., unknown binaries listening on open ports).
+----------------------------------------------------------------
+🔹 [Step 3: Scan the System with Nmap (External View)]
+
+From another machine/VM:
+
+nmap -sV 192.168.1.X
+
+Goal: See what the attacker sees → exposed services.
+----------------------------------------------------------------
+🔹 [Step 4: Capture Network Traffic]
+
+Demo Commands:
+sudo tcpdump -i eth0 -c 50 -w capture.pcap
+
+Open in Wireshark:
+Look for repeated SSH attempts.
+Spot suspicious outbound traffic.
+----------------------------------------------------------------
+🔹 [Step 5: Check for Weak Passwords]
+
+Demo Commands:
+sudo unshadow /etc/passwd /etc/shadow > hashes.txt
+john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
+
+Goal: Detect weak or cracked passwords.
+----------------------------------------------------------------
+🔹 [Step 6: Secure the System]
+
+Demo Commands:
+sudo apt update && sudo apt upgrade -y    # Patch system
+sudo ufw enable                           # Enable firewall
+sudo ufw allow ssh                        # Allow SSH
+sudo ufw deny 23                          # Block Telnet if running
+sudo passwd -l suspicioususer             # Lock compromised accounts
+
+Goal: Harden the server against future attacks.
+===============================================================
+
+
+
